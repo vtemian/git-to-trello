@@ -5,18 +5,25 @@ import requests
 
 import config
 
-status = Blueprint('statu', __name__, 'templates')
+status = Blueprint('status', __name__, 'templates')
 
-@status.route('/status/new', methods=['GET'])
+@status.route('/status')
+def index():
+  return render_template('status.html')
+
+@status.route('/status/new', methods=['POST'])
 def new():
   data = {
-    "state": 'success',
-    "description": 'test',
+    "state": request.form['state'],
+    "description": request.form['description'],
   }
 
+  sha = request.form['sha']
+  user = request.form['user']
+  repo = request.form['repo']
   auth_url = "?access_token=%s" % config.GITHUB_TOKEN
-  sha = 'bb1109d975fb0208525c78334a0a8d0a97c4319b'
-  url = "%s%s" % ("https://api.github.com/repos/vtemian/todopy/statuses/"+sha, auth_url)
+
+  url = "https://api.github.com/repos/%s/%s/statuses/%s%s" % (user, repo, sha, auth_url)
 
   response = requests.post(url, data=json.dumps(data))
 
