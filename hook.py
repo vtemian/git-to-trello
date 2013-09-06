@@ -29,4 +29,6 @@ def new():
 
 @hook.route('/hook/push', methods=['POST'])
 def push():
+  data = json.loads(request.data)
+  print data['state'], data['sha'], data['pull_request']['body']
   return render_template('response.html', response='awsm')
