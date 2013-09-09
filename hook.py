@@ -7,6 +7,10 @@ import config
 
 hook = Blueprint('hooks', __name__, 'templates')
 
+@hook.route('/hook')
+def home():
+  return render_template('new.html')
+
 @hook.route('/hook/new', methods=['POST'])
 def new():
   data = {
