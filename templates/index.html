@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block container %}
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Github
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="github/auth">Get new token</a></li>
+          <li><a href="hook">Create new hook</a></li>
+          <li><a href="status">Change pull request status</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Trello
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

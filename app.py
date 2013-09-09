@@ -11,9 +11,9 @@ app.register_blueprint(hook)
 app.register_blueprint(github)
 app.register_blueprint(status)
 
-@app.route('/new')
-def hello():
-   return render_template('new.html')
+@app.route('/')
+def index():
+   return render_template('index.html')
 
 if __name__ == '__main__':
   app.run()
