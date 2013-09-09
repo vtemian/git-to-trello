@@ -25,9 +25,10 @@ def new():
   }
 
   auth_url = "?access_token=%s" % config.GITHUB_TOKEN
-  url = "%s%s" % ("https://api.github.com/repos/vtemian/todopy/hooks", auth_url)
+  url = "https://api.github.com/repos/%s/%s/hooks" % (request.form['user'],
+                                                      request.form['repo'])
 
-  response = requests.post(url, data=json.dumps(data))
+  response = requests.post("%s%s" % (url, auth_url), data=json.dumps(data))
 
   return render_template('response.html', response=response.content)
 
