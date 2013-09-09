@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request
 import requests
 
 import config
+from tracker.API import TrackerAPI
 
 hook = Blueprint('hooks', __name__, 'templates')
 
@@ -30,9 +31,23 @@ def new():
 
   return render_template('response.html', response=response.content)
 
-
-@hook.route('/hook/push', methods=['POST'])
+@hook.route('/github/hook/push', methods=['POST'])
 def push():
+  tracker = TrackerAPI(config.TRELLO_KEY, config.TRELLO_TOKEN)
+
   data = json.loads(request.data)
-  print data['state'], data['sha'], data['pull_request']['body']
-  return render_template('response.html', response='awsm')
+
+  state_router = {
+    'success': 'green',
+    'pending': 'yellow',
+    'failure': 'red',
+    'error'  : 'red',
+  }
+
+  state_details = {
+    'card': data['pull_request']['body'],
+    'state': state_router[data['state']]
+  }
+
+  tracker.change_state(**state_details)
+  return render_template('response.html', response='done')
