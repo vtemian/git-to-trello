@@ -18,12 +18,17 @@ def change_label():
   wrapper = TrelloApi(config.TRELLO_KEY, config.TRELLO_TOKEN)
 
   card_pattern = 'https://trello.com/c/(\w+)'
-  card = re.search(card_pattern, request.form['card']).group(1)
+
+  try:
+    card = re.search(card_pattern, request.form['card']).group(1)
+  except:
+    return render_template('response.html', response='Invalid shortlink')
 
   try:
     wrapper.cards.delete_label_color(request.form['state'], card)
   except:
     pass
+
   response = wrapper.cards.new_label(card, request.form['state'])
 
   return render_template('response.html', response=response)
