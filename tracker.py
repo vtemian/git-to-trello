@@ -1,19 +1,29 @@
+import json
+import re
+
 from trello import TrelloApi
+from flask import Blueprint, render_template, request
+import requests
 
 import config
 
-class Tracker(object):
+tracker = Blueprint('tracker', __name__, 'templates')
 
-  def __init__(self):
-    self.wrapper = TrelloApi(config.TRELLO_KEY, config.TRELLO_TOKEN)
+@tracker.route('/tracker/change_label', methods=['GET'])
+def trello():
+  return render_template('change_label.html')
 
-  def change_state(self, card, state):
-    try:
-      print self.wrapper.cards.delete_label_color('green', card)
-    except:
-      pass
-    print self.wrapper.cards.new_label(card, 'red')
+@tracker.route('/tracker/change_label', methods=['POST'])
+def change_label():
+  wrapper = TrelloApi(config.TRELLO_KEY, config.TRELLO_TOKEN)
 
-if __name__ == '__main__':
-  tracker = Tracker()
-  tracker.change_state('VXViQZQl', 'asd')
+  card_pattern = 'https://trello.com/c/(\w+)'
+  card = re.search(card_pattern, request.form['card']).group(1)
+
+  try:
+    wrapper.cards.delete_label_color(request.form['state'], card)
+  except:
+    pass
+  response = wrapper.cards.new_label(card, request.form['state'])
+
+  return render_template('response.html', response=response)

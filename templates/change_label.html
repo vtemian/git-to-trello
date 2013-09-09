@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+  <script src="static/register.js"></script>
+{% endblock %}
+{% block container %}
+  <div class="row">
+    <div class="well well-lg">
+      <h1>change card state</h1><br>
+      <form role="form" method="POST">
+        <div class="form-group">
+          <input type="text" class="form-control" name="card" placeholder="Card shortlink">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="state"
+          placeholder="Choose a color :)">
+        </div>
+
+        <button type="submit" class="btn-lg btn btn-default">Change state</button>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}
