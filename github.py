@@ -21,6 +21,10 @@ def auth():
   auth = (config.GITHUB_USER, config.GITHUB_PASSWORD)
 
   response = requests.post(url, data=json.dumps(data), auth=auth)
+  response = json.loads(response.content)
 
-  token = json.loads(response.content)['token']
-  return render_template('auth.html', token=token)
+  if 'token' in response:
+    token = repsone['token']
+    return render_template('auth.html', token=token)
+  else:
+    return render_template('response.html', reponse=json.dumps(response))
