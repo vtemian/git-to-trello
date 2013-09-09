@@ -7,11 +7,11 @@ import config
 
 hook = Blueprint('hooks', __name__, 'templates')
 
-@hook.route('/hook')
+@hook.route('/github/hook')
 def home():
   return render_template('new.html')
 
-@hook.route('/hook/new', methods=['POST'])
+@hook.route('/github/hook/new', methods=['POST'])
 def new():
   data = {
     "name": request.form['name'],

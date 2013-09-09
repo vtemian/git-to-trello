@@ -5,10 +5,10 @@ import requests
 
 import config
 
-github = Blueprint('github', __name__, 'templates')
+auth = Blueprint('github', __name__, 'templates')
 
-@github.route('/github/auth', methods=['POST', 'GET'])
-def auth():
+@auth.route('/github/auth', methods=['POST', 'GET'])
+def get_token():
   data = {
     'scopes': [
       'repo',
@@ -27,4 +27,4 @@ def auth():
     token = repsone['token']
     return render_template('auth.html', token=token)
   else:
-    return render_template('response.html', reponse=json.dumps(response))
+    return render_template('response.html', response=str(json.dumps(response)))

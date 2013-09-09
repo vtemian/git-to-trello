@@ -7,11 +7,11 @@ import config
 
 status = Blueprint('status', __name__, 'templates')
 
-@status.route('/status')
+@status.route('/github/status')
 def index():
   return render_template('status.html')
 
-@status.route('/status/new', methods=['POST'])
+@status.route('/github/status/new', methods=['POST'])
 def new():
   data = {
     "state": request.form['state'],
