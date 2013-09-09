@@ -28,5 +28,3 @@ def new():
   response = requests.post(url, data=json.dumps(data))
 
   return render_template('response.html', response=response.content)
-
-
